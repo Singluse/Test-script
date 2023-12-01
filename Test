@@ -1,0 +1,124 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Singluse/Kavo-ui-mfh/main/Kavoui"))()
+local Window = Library.CreateLib("Test Script Any Game Working", "BloodTheme")
+
+--Tabs
+
+local Tab = Window:NewTab("Main")
+local Section = Tab:NewSection("Main")
+
+Section:NewButton("Hitbox","Increase Range",function()
+_G.HeadSize = 15
+_G.Disabled = true
+
+game:GetService('RunService').RenderStepped:connect(function()
+if _G.Disabled then
+for i,v in next, game:GetService('Players'):GetPlayers() do
+if v.Name ~= game:GetService('Players').LocalPlayer.Name then
+pcall(function()
+v.Character.HumanoidRootPart.Size = Vector3.new(_G.HeadSize,_G.HeadSize,_G.HeadSize)
+v.Character.HumanoidRootPart.Transparency = 0.7
+v.Character.HumanoidRootPart.BrickColor = BrickColor.new("Really red")
+v.Character.HumanoidRootPart.Material = "Neon"
+v.Character.HumanoidRootPart.CanCollide = false
+end)
+end
+end
+end
+end)
+end)
+
+Section:NewButton("TeleportTool", "noInfo", function()
+mouse = game.Players.LocalPlayer:GetMouse()
+    tool = Instance.new("Tool")
+    tool.RequiresHandle = false
+    tool.Name = "Click To Teleport"
+    tool.Activated:connect(function()
+        local pos = mouse.Hit+Vector3.new(0,2.5,0)
+        pos = CFrame.new(pos.X,pos.Y,pos.Z)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pos
+    end)
+    tool.Parent = game.Players.LocalPlayer.Backpack
+end)
+
+Section:NewToggle("Infinite Jump", "you can jump infinitely.", function(state)    ---put your script to enabled true
+    if state then                                                                                                                                              ---should be the same script
+        local InfiniteJumpEnabled = true
+        game:GetService("UserInputService").JumpRequest:connect(function()
+            if InfiniteJumpEnabled then
+                game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
+            end
+        end)
+        print("Infinite Jump:ON")
+    else
+       local InfiniteJumpEnabled = false                                                                                                            ---Put your script  disabled false
+        game:GetService("UserInputService").JumpRequest:connect(function()         
+            if InfiniteJumpEnabled then
+                game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
+            end
+        end)
+        print("Infinite Jump:OFF")
+    end
+end)
+
+Section:NewButton("Tracers", "see all player", function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/Exunys/Tracers-Script/main/Tracers.lua'))()
+end)
+
+Section:NewButton("FullBright", "Make You Light", function()
+    --[[ Subscribe to Zaptosis on YouTube for more awesome scripts!
+
+]]
+
+
+
+local Light = game:GetService("Lighting")
+
+
+
+function dofullbright()
+
+Light.Ambient = Color3.new(1, 1, 1)
+
+Light.ColorShift_Bottom = Color3.new(1, 1, 1)
+
+Light.ColorShift_Top = Color3.new(1, 1, 1)
+
+end
+
+
+
+dofullbright()
+
+
+
+Light.LightingChanged:Connect(dofullbright)
+end)
+
+local Tab = Window:NewTab("Player")
+local Section = Tab:NewSection("Player")
+
+Section:NewToggle("Super-Human", "go fast and jump high", function(state)
+        if state then
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 120
+            game.Players.LocalPlayer.Character.Humanoid.JumpPower = 120
+        else
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+            game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+        end
+    end)
+
+Section:NewSlider("WalkSpeed", "Give You Speed", 250, 16, function(s) -- 250 (MaxValue) | 16 (MinValue)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+end)
+
+Section:NewSlider("JumpPower", "Give You High", 250, 50, function(s) -- 250 (MaxValue) | 50 (MinValue)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = s
+end)
+
+Section:NewToggle("Fov Hack", "NoInfo", function(state)
+        if state then
+            game.Workspace.CurrentCamera.FieldOfView = 120
+        else
+            game.Workspace.CurrentCamera.FieldOfView = 70
+        end
+    end)
